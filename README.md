@@ -41,3 +41,13 @@ This repository contains automated API test suites created using Postman to demo
 * **`POST` /api/login (Success):** Validates authentication payload, verifies HTTP `200 OK`, and asserts presence of auth token.
 * **`GET` /api/users/2 (Header Check):** Tests protected resource access and response policies.
 * **`POST` /api/login (Missing Password):** Verifies authentication failure handling and asserts HTTP `400 Bad Request` status response.
+---
+
+## 🛠️ Collection 4: 04_Dynamic_Workflows
+* **Target API:** JSONPlaceholder (`https://jsonplaceholder.typicode.com`)
+* **File:** `04_Dynamic_Workflows.postman_collection.json`
+
+### Test Cases Covered:
+* **`POST` /posts (Create & Store Variable):** Generates a new resource, asserts HTTP `201 Created`, and dynamically extracts response `id` into collection scope.
+* **`PUT` /posts/{{created_post_id}} (Dynamic Update):** Utilizes stored collection variable to target created resource and asserts HTTP `200 OK`.
+* **`DELETE` /posts/{{created_post_id}} (Dynamic Delete):** Verifies dynamic resource cleanup and asserts HTTP `200 OK`.
