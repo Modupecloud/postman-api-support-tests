@@ -46,6 +46,16 @@ This repository contains automated API test suites created using Postman to demo
 ## 🛠️ Collection 4: 04_Dynamic_Workflows
 * **Target API:** JSONPlaceholder (`https://jsonplaceholder.typicode.com`)
 * **File:** `04_Dynamic_Workflows.postman_collection.json`
+* ---
+
+## 🛠️ Collection 5: 05_Stripe_Webhooks
+* **Target API:** Httpbin Webhook Echo Service (`https://httpbin.org`)
+* **File:** `05_Stripe_Webhooks.postman_collection.json`
+
+### Test Cases Covered:
+* **`POST` /post (Payment Succeeded Event):** Simulates a Stripe `payment_intent.succeeded` webhook, verifies the payload structure, and validates the presence of the `Stripe-Signature` security header.
+* **`POST` /post (Payment Failed Event):** Simulates a Stripe `payment_intent.payment_failed` event and validates error code handling (`card_declined`).
+* **`POST` /status/400 (Signature Validation Check):** Asserts system rejection behavior (`400 Bad Request`) when webhooks are transmitted without signature headers.
 
 ### Test Cases Covered:
 * **`POST` /posts (Create & Store Variable):** Generates a new resource, asserts HTTP `201 Created`, and dynamically extracts response `id` into collection scope.
