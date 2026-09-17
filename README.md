@@ -31,3 +31,13 @@ This repository contains automated API test suites created using Postman to demo
 3. Click **Import** in the top left corner.
 4. Upload the `.postman_collection.json` file.
 5. Click **Run Collection** to execute all tests automatically.
+---
+
+## 🛠️ Collection 3: 03_Auth_And_Headers
+* **Target API:** ReqRes (`https://reqres.in`)
+* **File:** `03_Auth_And_Headers.postman_collection.json`
+
+### Test Cases Covered:
+* **`POST` /api/login (Success):** Validates authentication payload, verifies HTTP `200 OK`, and asserts presence of auth token.
+* **`GET` /api/users/2 (Header Check):** Tests protected resource access and response policies.
+* **`POST` /api/login (Missing Password):** Verifies authentication failure handling and asserts HTTP `400 Bad Request` status response.
