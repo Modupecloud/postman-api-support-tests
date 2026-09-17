@@ -1,0 +1,74 @@
+{
+  "info": {
+    "_postman_id": "8a9428be-d29c-4499-9ae7-3273c3ee11e8",
+    "name": "02_Error_Handling_Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58138780",
+    "_collection_link": "https://go.postman.co/collection/58138780-8a9428be-d29c-4499-9ae7-3273c3ee11e8?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET Non-Existent Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 404 Not Found\", function () {\r\n    pm.response.to.have.status(404);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts/999999",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "posts",
+            "999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Invalid Endpoint Route",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 404 for non-existent route\", function () {\r\n    pm.response.to.have.status(404);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/invalid_endpoint_xyz",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "invalid_endpoint_xyz"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
