@@ -14,7 +14,15 @@ This repository contains automated API test suites created using Postman to demo
 * **`GET` /posts/1 (Read):** Validated data retrieval, verified HTTP `200 OK` status, and verified JSON body schema attributes (`id`, `title`, `body`).
 * **`PUT` /posts/1 (Update):** Validated resource updates, verified status HTTP `200 OK`, and confirmed updated body structure.
 * **`DELETE` /posts/1 (Delete):** Validated resource removal and verified HTTP `200 OK` status response.
+---
 
+## 🛠️ Collection 2: 02_Error_Handling_Tests
+* **Target API:** JSONPlaceholder (`https://jsonplaceholder.typicode.com`)
+* **File:** `02_Error_Handling_Tests.postman_collection.json`
+
+### Test Cases Covered:
+* **`GET` /posts/999999 (404 Not Found):** Asserts API handling when requesting non-existent records.
+* **`GET` /invalid_endpoint_xyz (404 Bad Route):** Validates system fallback behavior for non-existent URI paths.
 ---
 
 ## 🚀 How to Run These Tests
