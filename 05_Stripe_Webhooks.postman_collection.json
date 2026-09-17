@@ -1,0 +1,139 @@
+{
+  "info": {
+    "_postman_id": "07b07915-1edb-4d25-8b6c-01f49971e571",
+    "name": "05_Stripe_Webhooks",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58138780",
+    "_collection_link": "https://go.postman.co/collection/58138780-07b07915-1edb-4d25-8b6c-01f49971e571?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Trigger Payment Succeeded Webhook",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Webhook payload received and signature present\", function () {\r\n    var responseData = pm.response.json();\r\n    pm.expect(responseData.headers).to.have.property(\"Stripe-Signature\");\r\n    pm.expect(responseData.json.type).to.eql(\"payment_intent.succeeded\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Stripe-Signature",
+            "value": "t=1614839200,v1=mock_signature_abc123"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"evt_1IqX32LkdIwHu7ix3X49aB1Z\",\r\n  \"object\": \"event\",\r\n  \"type\": \"payment_intent.succeeded\",\r\n  \"data\": {\r\n    \"object\": {\r\n      \"id\": \"pi_1IqX32LkdIwHu7ix919aC2X\",\r\n      \"amount\": 2000,\r\n      \"currency\": \"usd\",\r\n      \"status\": \"succeeded\"\r\n    }\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://httpbin.org/post",
+          "protocol": "https",
+          "host": [
+            "httpbin",
+            "org"
+          ],
+          "path": [
+            "post"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Trigger Payment Failed Webhook",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Declined payment error code identified\", function () {\r\n    var responseData = pm.response.json();\r\n    pm.expect(responseData.json.type).to.eql(\"payment_intent.payment_failed\");\r\n    pm.expect(responseData.json.data.object.last_payment_error.code).to.eql(\"card_declined\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Stripe-Signature",
+            "value": "t=1614839200,v1=mock_signature_xyz789"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"evt_1IqX32LkdIwHu7ix4Y89bC2Z\",\r\n  \"object\": \"event\",\r\n  \"type\": \"payment_intent.payment_failed\",\r\n  \"data\": {\r\n    \"object\": {\r\n      \"id\": \"pi_1IqX32LkdIwHu7ix919aC2X\",\r\n      \"amount\": 2000,\r\n      \"currency\": \"usd\",\r\n      \"status\": \"requires_payment_method\",\r\n      \"last_payment_error\": {\r\n        \"code\": \"card_declined\",\r\n        \"message\": \"Your card was declined.\"\r\n      }\r\n    }\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://httpbin.org/post",
+          "protocol": "https",
+          "host": [
+            "httpbin",
+            "org"
+          ],
+          "path": [
+            "post"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Reject Webhook Missing Signature",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 400 Bad Request for unverified webhook\", function () {\r\n    pm.response.to.have.status(400);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"evt_invalid_000\",\r\n  \"object\": \"event\",\r\n  \"type\": \"payment_intent.succeeded\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://httpbin.org/status/400",
+          "protocol": "https",
+          "host": [
+            "httpbin",
+            "org"
+          ],
+          "path": [
+            "status",
+            "400"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
